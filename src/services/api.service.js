@@ -11,7 +11,6 @@ const ApiService = {
   },
 
   get(request, params) {
-    console.log(Vue.axios.baseUrl)
     return Vue.axios.get(request, params);
   }
 }
