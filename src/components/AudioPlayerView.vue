@@ -41,7 +41,7 @@
 
   .player {
     position: fixed;
-    width: 100%;
+    width: 100vw;
     height: calc(4rem + #{$timeline-height});
     bottom: 0;
 
