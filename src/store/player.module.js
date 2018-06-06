@@ -1,6 +1,8 @@
 export const actionTypes = {
   PLAY_EPISODE: '@@player/playEpisode',
   AUDIO_LOADED: '@@player/audioLoaded',
+  GO_BACKWARD: '@@player/goBackward',
+  GO_FORWARD: '@@player/goForward',
 }
 
 export const mutationTypes = {
@@ -29,6 +31,7 @@ const getters = {
       isMuted: state.isMuted,
       volume: state.volume,
       duration: state.duration,
+      durationFormatted: formatTime(state.duration),
       jumpedTime: state.jumpedTime,
     }
   }
@@ -60,6 +63,12 @@ const actions = {
   [actionTypes.AUDIO_LOADED](context, duration) {
     context.commit(mutationTypes.SET_AUDIO_DURATION, duration)
     context.commit(mutationTypes.PLAY)
+  },
+  [actionTypes.GO_BACKWARD]({commit, state}, duration) {
+    commit(mutationTypes.SET_CURRENT_TIME, state.currentTime - duration)
+  },
+  [actionTypes.GO_FORWARD]({commit, state}, duration) {
+    commit(mutationTypes.SET_CURRENT_TIME, state.currentTime + duration)
   }
 }
 
@@ -93,6 +102,7 @@ const mutations = {
   },
   [mutationTypes.SET_CURRENT_PERCENT](state, percent) {
     state.jumpedTime = parseInt(state.duration * ( percent / 100))
+    state.currentTime = parseInt(state.duration * ( percent / 100))
   }
 }
 
@@ -108,5 +118,8 @@ const formatNumber = (num) => {
 }
 
 const formatTime = (time) => {
-  return `${formatNumber(time / 60)}:${formatNumber(time % 60)}`
+  const hours = parseInt(time / (60 * 60))
+  const minutes = parseInt(time / 60 - hours * 60)
+  const seconds = parseInt(time % 60)
+  return `${formatNumber(hours)}:${formatNumber(minutes)}:${formatNumber(seconds)}`
 }

@@ -1,4 +1,5 @@
 import { PodcastService } from "../services/api.service";
+import { Z_DEFAULT_STRATEGY } from "zlib";
 
 export const actionTypes = {
   FETCH: "@@podcasts/fetch"
@@ -26,9 +27,7 @@ const actions = {
   async [actionTypes.FETCH](context) {
     context.commit(mutationTypes.FETCH_START);
     try {
-      const list = await PodcastService.getPodcasts(10).then(
-        ({ data }) => data
-      );
+      const list = await PodcastService.getPodcasts(10);
       context.commit(mutationTypes.FETCH_OK, {
         list
       });
@@ -54,7 +53,7 @@ const mutations = {
   },
 
   [mutationTypes.FETCH_ERROR](state, payload) {
-    state.isLoading = true;
+    state.isLoading = false;
     state.list = [];
     state.error = payload.error;
   }

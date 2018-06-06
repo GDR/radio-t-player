@@ -3,7 +3,7 @@
     <h3>{{ podcastInfo.title }} </h3> <button v-on:click="play">Play</button>
     <ul>
       <li v-for="(timeLabel, index) in podcastInfo.time_labels" v-bind:key="index">
-        {{ timeLabel.topic }}
+        {{ timeLabel.topic }} <formatted-time v-bind:time="timeLabel.time"></formatted-time>
       </li>
     </ul>
   </div>
@@ -19,6 +19,7 @@
 
 <script>
 import { actionTypes } from "@/store/player.module";
+import FormattedTime from './FormattedTime.vue';
 
 export default {
   name: "PodcastItem",
@@ -29,6 +30,9 @@ export default {
     play() {
       this.$store.dispatch(actionTypes.PLAY_EPISODE, this.podcastInfo)
     }
+  },
+  components: {
+    FormattedTime
   }
 };
 </script>
