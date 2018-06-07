@@ -26,7 +26,7 @@
       </div>
       <div class="player__right">
         <div class="player__time">
-          {{playerState.currentTimeFormatted}} / {{playerState.durationFormatted}}
+          {{playerState.currentTime | formatSeconds}} / {{playerState.duration | formatSeconds}}
         </div>
       </div>
     </div>
@@ -109,7 +109,8 @@
 
 <script>
 import { mutationTypes, actionTypes } from "@/store/player.module";
-import AudioProgress from "@/components/AudioProgress.vue";
+import AudioProgress from "@/components/AudioPlayerProgress.vue";
+import { getClickedPercent, formatSeconds } from "@/utils/playerUtils";
 
 export default {
   name: "AudioPlayerView",
@@ -143,6 +144,11 @@ export default {
   components: {
     AudioProgress
   },
-  mounted() {}
+  mounted() {},
+  filters: {
+    formatSeconds(seconds) {
+      return formatSeconds(seconds)
+    }
+  }
 };
 </script>
