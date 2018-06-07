@@ -1,7 +1,8 @@
 import Vue from "vue";
 import axios from "axios";
 import VueAxios from "vue-axios";
-import moment from "moment";
+import { DateTime } from "luxon";
+import { parseSeconds } from "../utils/apiUtils";
 
 const ApiService = {
   init() {
@@ -28,14 +29,10 @@ export const PodcastService = {
             return podcast
           }
           const time_labels = podcast.time_labels.map(timelabel => {
-            const parsedTime = moment(timelabel.time);
-            const hours = parseInt(parsedTime.format("HH"));
-            const minutes = parseInt(parsedTime.format("mm"));
-            const seconds = parseInt(parsedTime.format("ss"));
             return {
               ...timelabel,
-              time: hours * 60 * 60 + minutes * 60 + seconds
-            };
+              time: parseSeconds(timelabel.time)
+            }
           });
           return {
             ...podcast,
