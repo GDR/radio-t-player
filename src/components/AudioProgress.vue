@@ -45,7 +45,7 @@
 </style>
 
 <script>
-import { mutationTypes, actionTypes } from "@/store/player.module";
+import { mutationTypes } from "@/store/player.module";
 import { getClickedPercent } from "@/utils/playerUtils";
 
 export default {
