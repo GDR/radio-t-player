@@ -1,7 +1,12 @@
 <template>
-  <div class="player__timeline" @mousedown="dragStart">
+  <v-touch 
+    class="player__timeline" 
+    v-on:pan="touchProgress" 
+    v-on:panend="touchEnd"
+    v-on:tap="touchEnd"
+  >
     <div class="player__timeline__progress" :style="progressStyle"></div>
-  </div>
+  </v-touch>
 </template>
 
 <style lang="scss" scoped>
@@ -56,41 +61,25 @@ export default {
       return this.$store.getters.getPlayerState
     },
     progressStyle() {
+      if (this.isDragging) {
+        return {
+          width: this.progress + "%"
+        }
+      } 
       return {
-        width: this.progress + "%"
+        width: this.playerState.currentPercentage + "%"
       }
     }
   },
   methods: {
-   dragStart(event) {
-      console.log('start')
-      document.onmouseup = this.dragStop
-      document.onmousemove = this.dragProcess
-      document.ontouchmove = this.touchProcess
-      
+    touchProgress(event) {
       this.$data.isDragging = true
-      const offsetX = event.offsetX;
-      const width = event.target.clientWidth;
-      this.$data.progress = getClickedPercent(offsetX, width)
+      this.$data.progress = getClickedPercent(event.center.x, window.innerWidth)
     },
-    dragStop() {
-      console.log('stop')
-      document.onmouseup = null
-      document.onmousemove = null
+    touchEnd(event) {
       this.$data.isDragging = false
+      this.$data.progress = getClickedPercent(event.center.x, window.innerWidth)
       this.$store.commit(mutationTypes.SET_CURRENT_PERCENT, this.progress)
-    },
-    dragProcess(event) {
-      event.stopPropagation()
-      event.preventDefault();
-      
-      const offsetX = event.clientX;
-      const width = window.innerWidth;
-      this.$data.progress = getClickedPercent(offsetX, width)
-    },
-    touchProcess(event) {
-      event.preventDefault();
-      console.log(event);
     }
   }
 }
