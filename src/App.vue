@@ -24,7 +24,7 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '~normalize.css';
+  @import '~normalize-scss/sass/normalize/_import-now';
   @import './styles/constants.scss';
 
   * {
