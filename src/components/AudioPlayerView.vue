@@ -34,16 +34,18 @@
 </template>
 
 <style lang="scss" scoped>
+  @import '@/styles/_functions.scss';
   $timeline-height: 4px;
+  $player-button-size: pxToRem(40);
 
   .player {
     position: fixed;
-    width: 100vw;
+    width: 100%;
     height: calc(4rem + #{$timeline-height});
     bottom: 0;
 
     background: white;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 5px rgba(206, 142, 142, 0.5);
 
     &__content {
       padding: 4px 1rem 0 1rem;
@@ -59,12 +61,12 @@
     &__podcast {
       align-self: center;
       &__title {
-        font-size: 1.125em;
+        font-size: pxToEm(18);
         font-weight: lighter;
       }
 
       &__topic {
-        font-size: 0.8125em;
+        font-size: pxToEm(14);
         color: rgba(0, 0, 0, 0.54);
       }
     }
@@ -72,21 +74,20 @@
     &__control {
       display: flex;
       align-items: center;
-      margin-bottom: 4px;
+      margin-bottom: $timeline-height;
 
       button {
         background: none;
         border: none;
         padding: 0;
-        height: 40px;
-        height: 40px;
+        height: $player-button-size;
 
         outline: none;
-        margin-right: 12px;
+        margin-right: pxToRem(12);
 
         img {
-          width: 40px;
-          height: 40px;
+          width: $player-button-size;
+          height: $player-button-size;
         }
       }
 
@@ -98,13 +99,12 @@
     &__time {
       font-family: monospace;
       letter-spacing: -0.5px;
-      font-size: 0.8125em;
+      font-size: pxToEm(14);
       color: rgba(0, 0, 0, 0.54);
-      margin-top: 12px;
+      margin-top: pxToRem(12);
       float: right;
     }
   }
-
 </style>
 
 <script>

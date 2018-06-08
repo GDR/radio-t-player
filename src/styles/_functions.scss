@@ -1,0 +1,7 @@
+@function pxToEm($pixel) {
+  @return ($pixel / 16) * 1em;
+}
+
+@function pxToRem($pixel) {
+  @return ($pixel / 16) * 1rem;
+}
